@@ -12,6 +12,19 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.imageio.ImageIO;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.util.Random;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
@@ -20,6 +33,7 @@ import java.util.logging.Level;
 import javax.swing.JTextField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.Icon;
 
 
 
@@ -33,24 +47,39 @@ public class Blackjack extends JFrame {
     private BufferedImage image;
     private JLabel lblNewLabel;
     private JLabel lblNewLabel_1;
-    private JTextField textField;
-    private JTextField textField_1;
     static int counter = 0;
+    private JPanel panel_2;
+    private JPanel panel_3;
+    private JLabel lblNewLabel_2;
+    private JLabel lblNewLabel_3;
+
+    int player_img = 0;
+    int dealer_img = 0;
+
+    int wert_Player = 0;
+    int wert_Dealer = 0;
 
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
                     Blackjack frame = new Blackjack();
                     frame.setVisible(true);
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
+
+
+
+
+
+
     }
 
 
@@ -59,7 +88,7 @@ public class Blackjack extends JFrame {
 
     private void initComponents() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 478, 236);
+        setBounds(100, 100, 478, 533);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
@@ -72,7 +101,7 @@ public class Blackjack extends JFrame {
                 btnHitMouseClicked(e);
             }
         });
-        btnHit.setBounds(76, 147, 117, 29);
+        btnHit.setBounds(76, 454, 117, 29);
         contentPane.add(btnHit);
 
         btnStay = new JButton("Stay");
@@ -82,18 +111,8 @@ public class Blackjack extends JFrame {
                 btnStayMouseClicked(e);
             }
         });
-        btnStay.setBounds(292, 147, 117, 29);
+        btnStay.setBounds(292, 454, 117, 29);
         contentPane.add(btnStay);
-
-        textField = new JTextField();
-        textField.setBounds(76, 38, 333, 26);
-        contentPane.add(textField);
-        textField.setColumns(10);
-
-        textField_1 = new JTextField();
-        textField_1.setBounds(73, 87, 336, 26);
-        contentPane.add(textField_1);
-        textField_1.setColumns(10);
 
 
 
@@ -101,11 +120,207 @@ public class Blackjack extends JFrame {
 
 
 
-    public Blackjack() {
+    public Blackjack() throws IOException{
         initComponents();
-        int wert_Dealer = player_hand()+player_hand();
-        textField.setText(wert_Dealer+"");
-        textField_1.setText(dealer_hand()+"");
+
+        BufferedImage Ass = ImageIO.read(new File("src/Ass.png"));
+        BufferedImage Zwei = ImageIO.read(new File("src/Zwei.png"));
+        BufferedImage Drei = ImageIO.read(new File("src/Drei.png"));
+        BufferedImage Vier = ImageIO.read(new File("src/Vier.png"));
+        BufferedImage Fünf = ImageIO.read(new File("src/F�nf.png"));
+        BufferedImage Sex = ImageIO.read(new File("src/Sex.png"));
+        BufferedImage Sieben = ImageIO.read(new File("src/Sieben.png"));
+        BufferedImage Acht = ImageIO.read(new File("src/Acht.png"));
+        BufferedImage Neun = ImageIO.read(new File("src/Neun.png"));
+        //BufferedImage Zehn = ImageIO.read(new File("src/Zehn.png"));
+        BufferedImage King = ImageIO.read(new File("src/King.png"));
+
+        int first_hand =  player_hand();
+        int second_hand = player_hand();
+
+        int first_hand_dealer =  dealer_hand();
+        int second_hand_dealer = dealer_hand();
+
+        int wert_Player = first_hand + second_hand;
+        int wert_Dealer = first_hand_dealer + second_hand_dealer;
+
+        System.out.println(wert_Dealer);
+        System.out.println(wert_Player);
+
+
+        JPanel panel2 = new JPanel();
+        panel2.setBounds(244, 36, 165, 193);
+        contentPane.add(panel2);
+        JLabel label2 = new JLabel(new ImageIcon(Ass));
+
+        switch(first_hand_dealer){
+            case 2:
+                label2 = new JLabel(new ImageIcon(Zwei));
+                break;
+            case 3:
+                label2 = new JLabel(new ImageIcon(Drei));
+                break;
+            case 4:
+                label2 = new JLabel(new ImageIcon(Vier));
+                break;
+            case 5:
+                label2 = new JLabel(new ImageIcon(Fünf));
+                break;
+            case 6:
+                label2 = new JLabel(new ImageIcon(Sex));
+                break;
+            case 7:
+                label2 = new JLabel(new ImageIcon(Sieben));
+                break;
+            case 8:
+                label2 = new JLabel(new ImageIcon(Acht));
+                break;
+            case 9:
+                label2 = new JLabel(new ImageIcon(Neun));
+                break;
+            case 10:
+                label2 = new JLabel(new ImageIcon(King));
+                break;
+            case 11:
+                label2 = new JLabel(new ImageIcon(Ass));
+                break;
+
+        }
+
+        JPanel panel1 = new JPanel();
+        panel1.setBounds(76, 36, 165, 193);
+        contentPane.add(panel1);
+        JLabel label1 = new JLabel(new ImageIcon(Zwei));
+
+        switch(second_hand_dealer){
+            case 2:
+                label1 = new JLabel(new ImageIcon(Zwei));
+                break;
+            case 3:
+                label1 = new JLabel(new ImageIcon(Drei));
+                break;
+            case 4:
+                label1 = new JLabel(new ImageIcon(Vier));
+                break;
+            case 5:
+                label1 = new JLabel(new ImageIcon(Fünf));
+                break;
+            case 6:
+                label1 = new JLabel(new ImageIcon(Sex));
+                break;
+            case 7:
+                label1 = new JLabel(new ImageIcon(Sieben));
+                break;
+            case 8:
+                label1 = new JLabel(new ImageIcon(Acht));
+                break;
+            case 9:
+                label1 = new JLabel(new ImageIcon(Neun));
+                break;
+            case 10:
+                label1 = new JLabel(new ImageIcon(King));
+                break;
+            case 11:
+                label1 = new JLabel(new ImageIcon(Ass));
+                break;
+
+        }
+
+        JPanel panel3 = new JPanel();
+        panel3.setBounds(76, 250, 165, 193);
+        contentPane.add(panel3);
+        JLabel label3 = new JLabel(new ImageIcon(Zwei));
+
+
+        switch(first_hand){
+            case 2:
+                label3 = new JLabel(new ImageIcon(Zwei));
+                break;
+            case 3:
+                label3 = new JLabel(new ImageIcon(Drei));
+                break;
+            case 4:
+                label3 = new JLabel(new ImageIcon(Vier));
+                break;
+            case 5:
+                label3 = new JLabel(new ImageIcon(Fünf));
+                break;
+            case 6:
+                label3 = new JLabel(new ImageIcon(Sex));
+                break;
+            case 7:
+                label3 = new JLabel(new ImageIcon(Sieben));
+                break;
+            case 8:
+                label3 = new JLabel(new ImageIcon(Acht));
+                break;
+            case 9:
+                label3 = new JLabel(new ImageIcon(Neun));
+                break;
+            case 10:
+                label3 = new JLabel(new ImageIcon(King));
+                break;
+            case 11:
+                label3 = new JLabel(new ImageIcon(Ass));
+                break;
+
+        }
+
+
+
+        JPanel panel4 = new JPanel();
+        panel4.setBounds(244, 250, 165, 193);
+        contentPane.add(panel4);
+        JLabel label4 = new JLabel(new ImageIcon(Zwei));
+
+        switch(second_hand){
+            case 2:
+                label4 = new JLabel(new ImageIcon(Zwei));
+                break;
+            case 3:
+                label4 = new JLabel(new ImageIcon(Drei));
+                break;
+            case 4:
+                label4 = new JLabel(new ImageIcon(Vier));
+                break;
+            case 5:
+                label4 = new JLabel(new ImageIcon(Fünf));
+                break;
+            case 6:
+                label4 = new JLabel(new ImageIcon(Sex));
+                break;
+            case 7:
+                label4 = new JLabel(new ImageIcon(Sieben));
+                break;
+            case 8:
+                label4 = new JLabel(new ImageIcon(Acht));
+                break;
+            case 9:
+                label4 = new JLabel(new ImageIcon(Neun));
+                break;
+            case 10:
+                label4 = new JLabel(new ImageIcon(King));
+                break;
+            case 11:
+                label4 = new JLabel(new ImageIcon(Ass));
+                break;
+
+        }
+
+        JLabel lblDealer = new JLabel("Dealer:");
+        lblDealer.setBounds(76, 11, 46, 14);
+        contentPane.add(lblDealer);
+
+        JLabel lblPlayer = new JLabel("Player:");
+        lblPlayer.setBounds(76, 235, 46, 14);
+        contentPane.add(lblPlayer);
+
+
+        panel1.add(label1);
+        panel2.add(label2);
+        panel3.add(label3);
+        panel4.add(label4);
+
     }
 
 
@@ -148,14 +363,13 @@ public class Blackjack extends JFrame {
 
 
     protected void btnHitMouseClicked(MouseEvent e) {
-        int wert_Player = Integer.parseInt(textField_1.getText());
-        int wert_Dealer = Integer.parseInt(textField.getText());
 
 
+/*
 
         if(wert_Player < 21) {
 
-            wert_Player = Integer.parseInt(textField_1.getText())+player_hand();
+            wert_Player = wert_Dealer+player_hand();
             textField_1.setText(wert_Player+"");
         }
 
@@ -180,15 +394,14 @@ public class Blackjack extends JFrame {
                     textField_1.setText(wert_Player+" " + "'WIN");
                 }
             }
-        }
+        }*/
     }
 
 
 
 
-
-
     protected void btnStayMouseClicked(MouseEvent e) {
+    	/*
         int wert_Player = Integer.parseInt(textField_1.getText());
         int wert_Dealer = Integer.parseInt(textField.getText());
 
@@ -200,9 +413,20 @@ public class Blackjack extends JFrame {
         }
         else if(wert_Player == wert_Dealer) {
             textField_1.setText(wert_Player + " 'DRAW'");
-        }
+        }*/
 
 
 
     }
+
+
+    public static void image_switcher(int a){
+
+
+
+
+    }
+
+
+
 }
