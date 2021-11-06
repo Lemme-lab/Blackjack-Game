@@ -37,8 +37,13 @@ public class Blackjack extends JFrame {
     private JTextField textField;
     private JTextField textField_1;
     static int counter = 0;
-
-
+    int first_hand;
+    int first_hand_dealer;
+    int second_hand;
+    JLabel label4 = new JLabel();
+    JLabel label3 = new JLabel();
+    JLabel label2 = new JLabel();
+    JLabel label1 = new JLabel();
 
     public static void main(String[] args) {
 
@@ -70,7 +75,11 @@ public class Blackjack extends JFrame {
         btnHit.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                btnHitMouseClicked(e);
+                try {
+                    btnHitMouseClicked(e);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
         });
         btnHit.setBounds(76, 520, 117, 29);
@@ -80,7 +89,11 @@ public class Blackjack extends JFrame {
         btnStay.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                btnStayMouseClicked(e);
+                try {
+                    btnStayMouseClicked(e);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
         });
         btnStay.setBounds(291, 520, 117, 29);
@@ -96,25 +109,19 @@ public class Blackjack extends JFrame {
         contentPane.add(textField_1);
         textField_1.setColumns(10);
 
+        JLabel lblDealer = new JLabel("Dealer:");
+        lblDealer.setBounds(76, 11, 46, 14);
+        contentPane.add(lblDealer);
 
+        JLabel lblPlayer = new JLabel("Player:");
+        lblPlayer.setBounds(76, 269, 46, 14);
+        contentPane.add(lblPlayer);
 
     }
 
-
-
     public Blackjack() throws IOException{
+
         initComponents();
-        BufferedImage Ass = ImageIO.read(new File("src/Ass.png"));
-        BufferedImage Zwei = ImageIO.read(new File("src/Zwei.png"));
-        BufferedImage Drei = ImageIO.read(new File("src/Drei.png"));
-        BufferedImage Vier = ImageIO.read(new File("src/Vier.png"));
-        BufferedImage Fünf = ImageIO.read(new File("src/Fünf.png"));
-        BufferedImage Sex = ImageIO.read(new File("src/Sex.png"));
-        BufferedImage Sieben = ImageIO.read(new File("src/Sieben.png"));
-        BufferedImage Acht = ImageIO.read(new File("src/Acht.png"));
-        BufferedImage Neun = ImageIO.read(new File("src/Neun.png"));
-        //BufferedImage Zehn = ImageIO.read(new File("src/Zehn.png"));
-        BufferedImage King = ImageIO.read(new File("src/King.png"));
 
         int first_hand =  player_hand();
         int second_hand = player_hand();
@@ -126,6 +133,9 @@ public class Blackjack extends JFrame {
         int wert_Dealer = first_hand_dealer + second_hand_dealer;
 
 
+
+        display(first_hand_dealer, second_hand_dealer,first_hand, second_hand);
+
         textField.setText(wert_Dealer+"");
         textField_1.setText(wert_Player+"");
 
@@ -134,12 +144,27 @@ public class Blackjack extends JFrame {
 
         System.out.println(wert_Dealer);
         System.out.println(wert_Player);
+    }
+
+    public void display(int first_hand, int second_hand, int first_hand_dealer, int second_hand_dealer) throws IOException {
+
+        initComponents();
+        BufferedImage Ass = ImageIO.read(new File("src/Ass.png"));
+        BufferedImage Zwei = ImageIO.read(new File("src/Zwei.png"));
+        BufferedImage Drei = ImageIO.read(new File("src/Drei.png"));
+        BufferedImage Vier = ImageIO.read(new File("src/Vier.png"));
+        BufferedImage Fünf = ImageIO.read(new File("src/Fünf.png"));
+        BufferedImage Sex = ImageIO.read(new File("src/Sex.png"));
+        BufferedImage Sieben = ImageIO.read(new File("src/Sieben.png"));
+        BufferedImage Acht = ImageIO.read(new File("src/Acht.png"));
+        BufferedImage Neun = ImageIO.read(new File("src/Neun.png"));
+        BufferedImage King = ImageIO.read(new File("src/King.png"));
 
 
         JPanel panel2 = new JPanel();
         panel2.setBounds(244, 36, 165, 193);
         contentPane.add(panel2);
-        JLabel label2 = new JLabel(new ImageIcon(Ass));
+
 
         switch(first_hand_dealer){
             case 2:
@@ -178,7 +203,7 @@ public class Blackjack extends JFrame {
         JPanel panel1 = new JPanel();
         panel1.setBounds(76, 36, 165, 193);
         contentPane.add(panel1);
-        JLabel label1 = new JLabel(new ImageIcon(Zwei));
+
 
         switch(second_hand_dealer){
             case 2:
@@ -217,7 +242,7 @@ public class Blackjack extends JFrame {
         JPanel panel3 = new JPanel();
         panel3.setBounds(76, 295, 165, 193);
         contentPane.add(panel3);
-        JLabel label3 = new JLabel(new ImageIcon(Zwei));
+
 
 
         switch(first_hand){
@@ -251,7 +276,6 @@ public class Blackjack extends JFrame {
             case 11:
                 label3 = new JLabel(new ImageIcon(Ass.getScaledInstance(200, 150, Image.SCALE_FAST)));
                 break;
-
         }
 
 
@@ -259,7 +283,6 @@ public class Blackjack extends JFrame {
         JPanel panel4 = new JPanel();
         panel4.setBounds(244, 295, 165, 193);
         contentPane.add(panel4);
-        JLabel label4 = new JLabel(new ImageIcon(Zwei));
 
         switch(second_hand){
             case 2:
@@ -292,32 +315,168 @@ public class Blackjack extends JFrame {
             case 11:
                 label4 = new JLabel(new ImageIcon(Ass.getScaledInstance(200, 150, Image.SCALE_FAST)));
                 break;
-
         }
-
-        JLabel lblDealer = new JLabel("Dealer:");
-        lblDealer.setBounds(76, 11, 46, 14);
-        contentPane.add(lblDealer);
-
-        JLabel lblPlayer = new JLabel("Player:");
-        lblPlayer.setBounds(76, 269, 46, 14);
-        contentPane.add(lblPlayer);
-
 
         panel1.add(label1);
         panel2.add(label2);
         panel3.add(label3);
         panel4.add(label4);
-
-
-
-
-
     }
 
+    public void redisplay(int first_hand, int second_hand, int position) throws IOException {
+        BufferedImage Ass = ImageIO.read(new File("src/Ass.png"));
+        BufferedImage Zwei = ImageIO.read(new File("src/Zwei.png"));
+        BufferedImage Drei = ImageIO.read(new File("src/Drei.png"));
+        BufferedImage Vier = ImageIO.read(new File("src/Vier.png"));
+        BufferedImage Fünf = ImageIO.read(new File("src/Fünf.png"));
+        BufferedImage Sex = ImageIO.read(new File("src/Sex.png"));
+        BufferedImage Sieben = ImageIO.read(new File("src/Sieben.png"));
+        BufferedImage Acht = ImageIO.read(new File("src/Acht.png"));
+        BufferedImage Neun = ImageIO.read(new File("src/Neun.png"));
+        BufferedImage King = ImageIO.read(new File("src/King.png"));
 
+        if(position == 1){
+        switch(first_hand){
+            case 2:
+                label2 = new JLabel(new ImageIcon(Zwei.getScaledInstance(200, 150, Image.SCALE_FAST)));
+                break;
+            case 3:
+                label2 = new JLabel(new ImageIcon(Drei.getScaledInstance(200, 150, Image.SCALE_FAST)));
+                break;
+            case 4:
+                label2 = new JLabel(new ImageIcon(Vier.getScaledInstance(200, 150, Image.SCALE_FAST)));
+                break;
+            case 5:
+                label2 = new JLabel(new ImageIcon(Fünf.getScaledInstance(200, 150, Image.SCALE_FAST)));
+                break;
+            case 6:
+                label2 = new JLabel(new ImageIcon(Sex.getScaledInstance(200, 150, Image.SCALE_FAST)));
+                break;
+            case 7:
+                label2 = new JLabel(new ImageIcon(Sieben.getScaledInstance(200, 150, Image.SCALE_FAST)));
+                break;
+            case 8:
+                label2 = new JLabel(new ImageIcon(Acht.getScaledInstance(200, 150, Image.SCALE_FAST)));
+                break;
+            case 9:
+                label2 = new JLabel(new ImageIcon(Neun.getScaledInstance(200, 150, Image.SCALE_FAST)));
+                break;
+            case 10:
+                label2 = new JLabel(new ImageIcon(King.getScaledInstance(200, 150, Image.SCALE_FAST)));
+                break;
+            case 11:
+                label2 = new JLabel(new ImageIcon(Ass.getScaledInstance(200, 150, Image.SCALE_FAST)));
+                break;
 
+        }
+        }
+        if(position == 1){
+        switch(second_hand){
+            case 2:
+                label1 = new JLabel(new ImageIcon(Zwei.getScaledInstance(200, 150, Image.SCALE_FAST)));
+                break;
+            case 3:
+                label1 = new JLabel(new ImageIcon(Drei.getScaledInstance(200, 150, Image.SCALE_FAST)));
+                break;
+            case 4:
+                label1 = new JLabel(new ImageIcon(Vier.getScaledInstance(200, 150, Image.SCALE_FAST)));
+                break;
+            case 5:
+                label1 = new JLabel(new ImageIcon(Fünf.getScaledInstance(200, 150, Image.SCALE_FAST)));
+                break;
+            case 6:
+                label1 = new JLabel(new ImageIcon(Sex.getScaledInstance(200, 150, Image.SCALE_FAST)));
+                break;
+            case 7:
+                label1 = new JLabel(new ImageIcon(Sieben.getScaledInstance(200, 150, Image.SCALE_FAST)));
+                break;
+            case 8:
+                label1 = new JLabel(new ImageIcon(Acht.getScaledInstance(200, 150, Image.SCALE_FAST)));
+                break;
+            case 9:
+                label1 = new JLabel(new ImageIcon(Neun.getScaledInstance(200, 150, Image.SCALE_FAST)));
+                break;
+            case 10:
+                label1 = new JLabel(new ImageIcon(King.getScaledInstance(200, 150, Image.SCALE_FAST)));
+                break;
+            case 11:
+                label1 = new JLabel(new ImageIcon(Ass.getScaledInstance(200, 150, Image.SCALE_FAST)));
+                break;
 
+        }
+        }
+
+        if(position == 2){
+        switch(first_hand){
+            case 2:
+                label3 = new JLabel(new ImageIcon(Zwei.getScaledInstance(200, 150, Image.SCALE_FAST)));
+                break;
+            case 3:
+                label3 = new JLabel(new ImageIcon(Drei.getScaledInstance(200, 150, Image.SCALE_FAST)));
+                break;
+            case 4:
+                label3 = new JLabel(new ImageIcon(Vier.getScaledInstance(200, 150, Image.SCALE_FAST)));
+                break;
+            case 5:
+                label3 = new JLabel(new ImageIcon(Fünf.getScaledInstance(200, 150, Image.SCALE_FAST)));
+                break;
+            case 6:
+                label3 = new JLabel(new ImageIcon(Sex.getScaledInstance(200, 150, Image.SCALE_FAST)));
+                break;
+            case 7:
+                label3 = new JLabel(new ImageIcon(Sieben.getScaledInstance(200, 150, Image.SCALE_FAST)));
+                break;
+            case 8:
+                label3 = new JLabel(new ImageIcon(Acht.getScaledInstance(200, 150, Image.SCALE_FAST)));
+                break;
+            case 9:
+                label3 = new JLabel(new ImageIcon(Neun.getScaledInstance(200, 150, Image.SCALE_FAST)));
+                break;
+            case 10:
+                label3 = new JLabel(new ImageIcon(King.getScaledInstance(200, 150, Image.SCALE_FAST)));
+                break;
+            case 11:
+                label3 = new JLabel(new ImageIcon(Ass.getScaledInstance(200, 150, Image.SCALE_FAST)));
+                break;
+        }
+        }
+
+        if(position == 2){
+        switch(second_hand){
+            case 2:
+                label4 = new JLabel(new ImageIcon(Zwei.getScaledInstance(200, 150, Image.SCALE_FAST)));
+                break;
+            case 3:
+                label4 = new JLabel(new ImageIcon(Drei.getScaledInstance(200, 150, Image.SCALE_FAST)));
+                break;
+            case 4:
+                label4 = new JLabel(new ImageIcon(Vier.getScaledInstance(200, 150, Image.SCALE_FAST)));
+                break;
+            case 5:
+                label4 = new JLabel(new ImageIcon(Fünf.getScaledInstance(200, 150, Image.SCALE_FAST)));
+                break;
+            case 6:
+                label4 = new JLabel(new ImageIcon(Sex.getScaledInstance(200, 150, Image.SCALE_FAST)));
+                break;
+            case 7:
+                label4 = new JLabel(new ImageIcon(Sieben.getScaledInstance(200, 150, Image.SCALE_FAST)));
+                break;
+            case 8:
+                label4 = new JLabel(new ImageIcon(Acht.getScaledInstance(200, 150, Image.SCALE_FAST)));
+                break;
+            case 9:
+                label4 = new JLabel(new ImageIcon(Neun.getScaledInstance(200, 150, Image.SCALE_FAST)));
+                break;
+            case 10:
+                label4 = new JLabel(new ImageIcon(King.getScaledInstance(200, 150, Image.SCALE_FAST)));
+                break;
+            case 11:
+                label4 = new JLabel(new ImageIcon(Ass.getScaledInstance(200, 150, Image.SCALE_FAST)));
+                break;
+        }
+        }
+
+    }
 
     public static int player_hand(){
         Random rnd = new Random();
@@ -335,21 +494,16 @@ public class Blackjack extends JFrame {
         return result;
     }
 
-
-
-
-
-
-
-    protected void btnHitMouseClicked(MouseEvent e) {
+    protected void btnHitMouseClicked(MouseEvent e) throws IOException {
         int wert_Player = Integer.parseInt(textField_1.getText());
         int wert_Dealer = Integer.parseInt(textField.getText());
 
-
+        int player_hand = player_hand();
+        int dealer_hand = dealer_hand();
 
         if(wert_Player < 21) {
 
-            wert_Player = Integer.parseInt(textField_1.getText())+player_hand();
+            wert_Player = Integer.parseInt(textField_1.getText())+player_hand;
             textField_1.setText(wert_Player+"");
         }
 
@@ -367,7 +521,7 @@ public class Blackjack extends JFrame {
                 textField.setText(wert_Dealer+"");
             }
             else {
-                wert_Dealer = Integer.parseInt(textField.getText())+dealer_hand();
+                wert_Dealer = Integer.parseInt(textField.getText())+dealer_hand;
                 textField.setText(wert_Dealer+"");
                 if(wert_Dealer > 21) {
                     textField.setText(wert_Dealer+" " + "'Bust");
@@ -375,19 +529,19 @@ public class Blackjack extends JFrame {
                 }
             }
         }
+
+
+
+
     }
 
-
-
-
-
-
-    protected void btnStayMouseClicked(MouseEvent e) {
+    protected void btnStayMouseClicked(MouseEvent e) throws IOException {
         int wert_Player = Integer.parseInt(textField_1.getText());
         int wert_Dealer = Integer.parseInt(textField.getText());
+        int dealer_hand = dealer_hand();
 
         if(wert_Dealer<17){
-            wert_Dealer += dealer_hand();
+            wert_Dealer += dealer_hand;
         }
 
 
